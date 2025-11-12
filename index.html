@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Hayce — Get things done nearby | Posters & Providers Waitlist</title>
   <meta name="description" content="Hayce connects Posters who need errands done with Providers already nearby. Join the waitlist for Hayce Hub (Poster) or Haycer (Provider). Fast, fair, local.">
-  <link rel="canonical" href="https://hayce-apps.com/" />
+  <link rel="canonical" href="https://hayce.com/" />
 
   <!-- Theme color -->
   <meta name="theme-color" content="#22C55E" media="(prefers-color-scheme: light)">
@@ -19,26 +19,26 @@
   <meta property="og:title" content="Hayce — Get things done nearby" />
   <meta property="og:description" content="Join the Hayce pre-launch waitlist: Posters (Hayce Hub) & Providers (Haycer)." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://hayce-apps.com/" />
+  <meta property="og:url" content="https://hayce.com/" />
   <meta property="og:site_name" content="Hayce" />
   <meta property="og:locale" content="en_CA" />
-  <meta property="og:image" content="https://hayce-apps.com/assets/og-image.svg" />
+  <meta property="og:image" content="https://hayce.com/assets/og-image.svg" />
   <meta property="og:image:alt" content="Hayce — H monogram with tagline: Post clearly. Get it done quickly." />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Hayce — Get things done nearby" />
   <meta name="twitter:description" content="Join the pre-launch waitlist: Posters (Hayce Hub) & Providers (Haycer)." />
-  <meta name="twitter:image" content="https://hayce-apps.com/assets/og-image.svg" />
+  <meta name="twitter:image" content="https://hayce.com/assets/og-image.svg" />
 
   <!-- Favicons / Manifest -->
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
-  <link rel="mask-icon" href="/assets/favicon.svg" color="#EAB308">
-  <link rel="manifest" href="/assets/site.webmanifest" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="mask-icon" href="assets/favicon.svg" color="#EAB308">
+  <link rel="manifest" href="assets/site.webmanifest" />
 
   <!-- Styles -->
-  <link rel="preload" href="/styles.css" as="style" />
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="preload" href="styles.css" as="style" />
+  <link rel="stylesheet" href="styles.css" />
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -48,8 +48,8 @@
       {
         "@type": "Organization",
         "name": "Hayce",
-        "url": "https://hayce-apps.com/",
-        "logo": "https://hayce-apps.com/assets/logo-h.svg",
+        "url": "https://hayce.com/",
+        "logo": "https://hayce.com/assets/logo-h.svg",
         "sameAs": []
       },
       {
@@ -59,7 +59,7 @@
         "operatingSystem": "iOS, Android",
         "offers": { "@type": "Offer", "price": "0" },
         "publisher": { "@type": "Organization", "name": "Hayce" },
-        "url": "https://hayce-apps.com/"
+        "url": "https://hayce.com/"
       },
       {
         "@type": "SoftwareApplication",
@@ -68,7 +68,7 @@
         "operatingSystem": "iOS, Android",
         "offers": { "@type": "Offer", "price": "0" },
         "publisher": { "@type": "Organization", "name": "Hayce" },
-        "url": "https://hayce-apps.com/"
+        "url": "https://hayce.com/"
       }
     ]
   }
@@ -86,8 +86,8 @@
 
   <header class="site-header" aria-label="Site header">
     <div class="container">
-      <a class="brand" href="/" aria-label="Hayce home">
-        <img src="/assets/logo-h.svg" alt="" width="36" height="36" />
+      <a class="brand" href="./" aria-label="Hayce home">
+        <img src="assets/logo-h.svg" alt="" width="36" height="36" />
         <span class="brand__name">Hayce</span>
       </a>
       <nav class="site-nav" aria-label="Main">
@@ -349,7 +349,7 @@
             </div>
           </div>
 
-          <!-- Hidden survey — Poster intent -->
+          <!-- Poster intent -->
           <fieldset class="field">
             <legend class="legend-spaced">What will you likely use Hayce for? <span class="micro">(pick a few)</span></legend>
             <div class="chipset">
@@ -365,10 +365,11 @@
             </div>
           </fieldset>
 
-          <!-- Hidden survey — Skills to offer -->
+          <!-- Skills -->
           <fieldset class="field">
             <legend class="legend-spaced">Skills you could offer <span class="micro">(optional)</span></legend>
             <div class="chipset">
+              <!-- (same list you already have) -->
               <label class="chip-check"><input type="checkbox" name="skills" value="Delivery"><svg class="ico" aria-hidden="true"><use href="#ico-delivery"/></svg><span>Delivery</span></label>
               <label class="chip-check"><input type="checkbox" name="skills" value="Cleaning"><svg class="ico" aria-hidden="true"><use href="#ico-cleaning"/></svg><span>Cleaning</span></label>
               <label class="chip-check"><input type="checkbox" name="skills" value="Tailoring"><svg class="ico" aria-hidden="true"><use href="#ico-tailoring"/></svg><span>Tailoring</span></label>
@@ -394,7 +395,7 @@
 
           <label class="consent check">
             <input type="checkbox" id="consent" name="consent" required />
-            I agree to receive early access updates and accept the <a href="/privacy.html" target="_blank" rel="noopener">Privacy</a> &amp; <a href="/terms.html" target="_blank" rel="noopener">Terms</a>.
+            I agree to receive early access updates and accept the <a href="privacy.html" target="_blank" rel="noopener">Privacy</a> &amp; <a href="terms.html" target="_blank" rel="noopener">Terms</a>.
           </label>
           <p class="error" id="error-consent" role="alert" aria-live="polite"></p>
 
@@ -420,7 +421,7 @@
         </details>
         <details class="faq">
           <summary>How do you handle my data?</summary>
-          <p>We collect only what’s needed to contact you and plan launches. See our <a href="/privacy.html">Privacy</a>.</p>
+          <p>We collect only what’s needed to contact you and plan launches. See our <a href="privacy.html">Privacy</a>.</p>
         </details>
         <details class="faq">
           <summary>Can I be both Poster and Provider?</summary>
@@ -465,8 +466,8 @@
     <div class="container foot-grid">
       <p class="micro">© <span id="year"></span> Hayce. All rights reserved.</p>
       <nav aria-label="Legal" class="foot-nav">
-        <a href="/privacy.html">Privacy</a>
-        <a href="/terms.html">Terms</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
       </nav>
     </div>
   </footer>
@@ -478,86 +479,66 @@
   <!-- Inline SVG sprite (icons) -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
     <!-- (icons unchanged) -->
-    <!-- delivery: truck -->
     <symbol id="ico-delivery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 6h11v8H3zM14 9h4l3 3v2h-7z"/>
       <circle cx="7" cy="16" r="2"/><circle cx="17" cy="16" r="2"/>
     </symbol>
-    <!-- cleaning: broom -->
     <symbol id="ico-cleaning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 17l5-2 4 4-2 2zM8 15l9-9"/>
       <path d="M18 5l1-1"/>
     </symbol>
-    <!-- repairs: wrench -->
     <symbol id="ico-repairs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 3a6 6 0 0 1-8 8l-7 7a2 2 0 0 1-3-3l7-7a6 6 0 0 1 11-5z"/>
     </symbol>
-    <!-- errands: clipboard/check -->
     <symbol id="ico-errands" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 4h6v2H9zM8 12l2 2 4-4"/>
     </symbol>
-    <!-- moving: box -->
     <symbol id="ico-moving" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 9l9-4 9 4-9 4-9-4z"/><path d="M12 13v8"/><path d="M21 9v8l-9 4-9-4V9"/>
     </symbol>
-    <!-- plumbing: pipe -->
     <symbol id="ico-plumbing" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 10h8v4H3zM11 12h6a4 4 0 0 0 4-4V6H17"/>
     </symbol>
-    <!-- electrical: bolt -->
     <symbol id="ico-electrical" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>
     </symbol>
-    <!-- painting: roller -->
     <symbol id="ico-painting" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="4" width="12" height="6" rx="2"/><path d="M15 7h3a2 2 0 0 1 2 2v3M10 10v8a2 2 0 0 0 2 2h2"/>
     </symbol>
-    <!-- yard: leaf -->
     <symbol id="ico-yard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 21s3-8 10-8 8-7 8-7-7-1-8 8-10 7-10 7z"/>
     </symbol>
-    <!-- trash: bin -->
     <symbol id="ico-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/>
     </symbol>
-    <!-- tailoring: scissors -->
     <symbol id="ico-tailoring" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="5" cy="7" r="2"/><circle cx="5" cy="17" r="2"/><path d="M7 8l10 5M7 16l10-5"/>
     </symbol>
-    <!-- hair: comb -->
     <symbol id="ico-hair" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="7" width="18" height="6" rx="2"/><path d="M6 13v4M9 13v4M12 13v4M15 13v4M18 13v4"/>
     </symbol>
-    <!-- tutoring: graduation cap -->
     <symbol id="ico-tutoring" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M12 13v8M7 10v4a5 5 0 0 0 10 0v-4"/>
     </symbol>
-    <!-- grocery: cart -->
     <symbol id="ico-grocery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="9" cy="20" r="1.8"/><circle cx="17" cy="20" r="1.8"/><path d="M3 4h2l2 12h10l2-8H7"/>
     </symbol>
-    <!-- pet: paw -->
     <symbol id="ico-pet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12 14c-3 0-6 2-6 5 2-2 4-2 6-2s4 0 6 2c0-3-3-5-6-5z"/>
       <circle cx="5.5" cy="9.5" r="1.5"/><circle cx="9.5" cy="7.5" r="1.5"/><circle cx="14.5" cy="7.5" r="1.5"/><circle cx="18.5" cy="9.5" r="1.5"/>
     </symbol>
-    <!-- tech: monitor -->
     <symbol id="ico-tech" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>
     </symbol>
-    <!-- furniture: chair -->
     <symbol id="ico-furniture" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="7" y="3" width="10" height="8" rx="2"/><path d="M7 11v7M17 11v7M7 15h10"/>
     </symbol>
-    <!-- snow: snowflake -->
     <symbol id="ico-snow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12 2v20M4 6l16 12M4 18L20 6M6 4l4 4M18 4l-4 4M6 20l4-4M18 20l-4-4"/>
     </symbol>
-    <!-- meal: fork -->
     <symbol id="ico-meal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M6 2v8M9 2v8M12 2v8M6 10c0 4 2 6 2 12M18 2v8a4 4 0 0 1-4 4h-2"/>
     </symbol>
-    <!-- event: calendar -->
     <symbol id="ico-event" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="M12 14l1.5 1.5L16 13"/>
     </symbol>
@@ -579,6 +560,6 @@
     </symbol>
   </svg>
 
-  <script type="module" src="/app.js?v=4"></script>
+  <script type="module" src="app.js?v=4"></script>
 </body>
 </html>

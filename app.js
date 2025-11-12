@@ -1,9 +1,4 @@
-// FILE: /app.js
-/* Minimal, accessible client logic; validation + provider abstraction.
-   Firestore + App Check (debug token) wired for local.
-   Duplicate prevention: document ID = sha256(lowercased email). (single collection)
-   Places Autocomplete: uses new <gmp-place-autocomplete> on v=beta, with legacy fallback.
-*/
+/* FILE: /app.js */
 import { CONFIG } from "./config.js";
 
 const qs = (s, el = document) => el.querySelector(s);
@@ -23,7 +18,6 @@ console.info("[Hayce] Boot", { origin: ORIGIN, hostname: HOST, isLocal: IS_LOCAL
 document.addEventListener("DOMContentLoaded", () => {
   qsa("#year").forEach(el => (el.textContent = new Date().getFullYear()));
 
-  // Prefill role buttons
   qsa('[data-action="prefill-role"]').forEach(btn => {
     btn.addEventListener("click", () => {
       const role = btn.getAttribute("data-role");
@@ -34,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Prefill via URL ?role=Provider
   const params = new URLSearchParams(location.search);
   const preRole = params.get("role");
   if (preRole && allowedRoles.includes(preRole)) {
@@ -43,11 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (CONFIG.enableAnalytics) loadAnalytics();
-
-  // Optional: Google Places Autocomplete
   enablePlacesIfConfigured();
 
-  // Progressive enhancement: ensure autocomplete attributes exist
   try {
     const ensureAuto = [
       ["#name", "name"],
@@ -153,7 +143,7 @@ async function onSubmit(e) {
     form.setAttribute("aria-disabled", "true");
     qsa("input,select,button", form).forEach(el => (el.disabled = true));
     setTimeout(() => {
-      const url = new URL("/thanks.html", location.origin);
+      const url = new URL("thanks.html", location.href);
       url.searchParams.set("role", payload.role);
       location.href = url.toString();
     }, 900);
@@ -163,7 +153,7 @@ async function onSubmit(e) {
     if (code === "already-registered") {
       setStatus("You’re already on the list with that email. Redirecting…");
       setTimeout(() => {
-        const url = new URL("/thanks.html", location.origin);
+        const url = new URL("thanks.html", location.href);
         url.searchParams.set("role", qs("#role")?.value || "");
         location.href = url.toString();
       }, 900);
@@ -242,12 +232,11 @@ async function submitViaFirebase(payload) {
   const app = initializeApp(firebase);
   console.info("[Firebase] App initialized for project:", firebase.projectId);
 
-  // --- App Check (debug + reCAPTCHA Enterprise/V3) ---
   let appCheckInstance = undefined;
   if (appCheck?.provider && appCheck?.siteKey) {
     if (appCheck.debug) {
       self.FIREBASE_APPCHECK_DEBUG_TOKEN = appCheck.debug === true ? true : String(appCheck.debug);
-      console.info("[AppCheck] Debug mode ON. A debug token will be printed by Firebase on the first App Check call.\nCopy it → Firebase Console → App Check → your Web app → Manage debug tokens → Add.");
+      console.info("[AppCheck] Debug mode ON. A debug token will be printed by Firebase on the first App Check call.");
     }
 
     const provider =
@@ -270,12 +259,9 @@ async function submitViaFirebase(payload) {
   const db = getFirestore(app);
   console.info("[Firestore] Ready.");
 
-  // ---- Single-collection duplicate prevention (doc ID = emailHash) ----
   const normalizedEmail = normalizeEmail(payload.email);
   const emailHash = await sha256Hex(normalizedEmail);
   const col = firebase.collection || "waitlist";
-
-  // One doc per email; rules allow create only. Duplicate → becomes update → denied.
   const ref = doc(db, col, emailHash);
 
   const docData = {
@@ -290,21 +276,14 @@ async function submitViaFirebase(payload) {
     posterIntent: payload.posterIntent || [],
     skills: payload.skills || [],
     consent: !!payload.consent,
-    emailHash, // normalized+hashed for admin/query use
+    emailHash,
     createdAt: serverTimestamp(),
     userAgent: navigator.userAgent || null
   };
 
-  console.info("[Firestore] create-if-new", {
-    idPrefix: emailHash.slice(0, 8) + "…",
-    email: payload.email,
-    role: payload.role
-  });
-
   try {
     await setDoc(ref, docData);
   } catch (e) {
-    // If the doc exists, this becomes an update and rules deny → treat as duplicate
     if (String(e?.code) === "permission-denied") {
       const friendly = new Error("Already registered");
       friendly.code = "already-registered";
@@ -324,9 +303,9 @@ function enablePlacesIfConfigured() {
 
   const params = new URLSearchParams({
     key,
-    v: "beta",               // REQUIRED for <gmp-place-autocomplete>
-    libraries: "places",     // ensures legacy fallback is available
-    loading: "async"         // silences console warning
+    v: "beta",
+    libraries: "places",
+    loading: "async"
   });
 
   const script = document.createElement("script");
@@ -349,7 +328,7 @@ async function attachCityAutocompleteSmart() {
     console.info("[Places] Using legacy Autocomplete fallback.");
     return attachAutocompleteLegacy(CONFIG?.googleMaps?.allowedCountries || ["CA","US","NG"]);
   }
-  console.warn("[Places] No autocomplete available (new widget missing and legacy unavailable).");
+  console.warn("[Places] No autocomplete available.");
 }
 
 async function attachCityAutocompleteElement() {
@@ -365,7 +344,6 @@ async function attachCityAutocompleteElement() {
   const allowed = CONFIG?.googleMaps?.allowedCountries || ["CA","US","NG"];
   pac.includedRegionCodes = allowed;
   try { pac.includedPrimaryTypes = ["locality", "postal_town"]; } catch {}
-
   pac.fetchFields = ["addressComponents", "displayName"];
 
   const cityField = input.closest(".field") || input.parentElement;

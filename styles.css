@@ -1,6 +1,4 @@
 /* FILE: /styles.css */
-/* (unchanged styles, including the social button styles you already added) */
-
 /* Brand palette — green / black / yellow / white */
 :root{
   --bg: #ffffff;
@@ -79,7 +77,6 @@ a:hover{ text-decoration:none; }
   position:sticky; top:0; z-index:10;
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  background-color: rgba(255,255,255,.85);
   background: color-mix(in oklab, var(--bg) 85%, transparent);
   border-bottom:1px solid var(--hairline);
 }
@@ -176,7 +173,7 @@ a:hover{ text-decoration:none; }
 .kpi{ font-weight:900; font-size:1.6rem; }
 .kpi-label{ color:var(--muted); }
 
-/* Chip cloud (Popular categories) */
+/* Chip cloud */
 .chip-cloud{
   display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:14px;
 }
@@ -212,15 +209,13 @@ a:hover{ text-decoration:none; }
   margin-bottom:8px;
 }
 .region-card h3{ margin:0 0 4px; font-size:1.2rem; }
-.region-note{ margin:0; color:var(--muted); }
+.region-note{ margin:0; color:var(--muted); font-weight:600; }
 .region--ca{ --r1:#D32F2F; --r2:#FFFFFF; --r3:#B71C1C; }
 .region--us{ --r1:#B22234; --r2:#3C3B6E; --r3:#FFFFFF; }
 .region--ng{ --r1:#008753; --r2:#FFFFFF; --r3:#1FAE66; }
 
-/* Make the new widgets line up like your inputs */
-gmp-place-autocomplete, gmpx-place-autocomplete {
-  width: 100%;
-}
+/* Google widgets width */
+gmp-place-autocomplete, gmpx-place-autocomplete { width: 100%; }
 
 /* Form */
 form{ margin-top:12px; }
@@ -242,16 +237,11 @@ legend{ font-weight:700; margin-bottom:6px; }
 .hp{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
 
 /* Chipset (checkbox pills) */
-.chipset{
-  display:flex; flex-wrap:wrap; gap:8px;
-}
+.chipset{ display:flex; flex-wrap:wrap; gap:8px; }
 .chip-check{
-  display:inline-flex; align-items:center;
-  border:1px solid var(--hairline);
+  display:inline-flex; align-items:center; border:1px solid var(--hairline);
   padding:6px 10px; border-radius:999px; cursor:pointer;
-  user-select:none;
-  -webkit-user-select:none;
-  -ms-user-select:none;
+  user-select:none; -webkit-user-select:none; -ms-user-select:none;
   background:transparent; transition: background .15s ease, border-color .15s ease;
 }
 .chip-check input{ appearance:none; width:1px; height:1px; position:absolute; opacity:0; }
@@ -273,9 +263,7 @@ legend{ font-weight:700; margin-bottom:6px; }
   display:flex; justify-content:center; align-items:center;
   gap:12px; flex-wrap:wrap; margin-top:14px;
 }
-.ico-social{
-  width:18px; height:18px; display:inline-block; vertical-align:-3px;
-}
+.ico-social{ width:18px; height:18px; display:inline-block; vertical-align:-3px; }
 .social-btn{
   --shadow: 0 6px 20px rgba(0,0,0,.12);
   display:inline-flex; align-items:center; gap:10px;
@@ -297,9 +285,7 @@ legend{ font-weight:700; margin-bottom:6px; }
     radial-gradient(60% 70% at 50% 100%, #833AB4 0%, #405DE6 70%);
 }
 /* Facebook blue */
-.social--fb{
-  color:#fff; background:#1877F2; border-color: transparent;
-}
+.social--fb{ color:#fff; background:#1877F2; border-color: transparent; }
 /* TikTok dark with glow accents */
 .social--tt{
   color:#fff; background:#111; border-color: #222;
@@ -307,9 +293,7 @@ legend{ font-weight:700; margin-bottom:6px; }
 }
 .social--tt .ico-social{ filter: drop-shadow(0 0 6px rgba(255,0,80,.35)); }
 /* YouTube red */
-.social--yt{
-  color:#fff; background:#FF0033; border-color: transparent;
-}
+.social--yt{ color:#fff; background:#FF0033; border-color: transparent; }
 
 /* Responsive */
 @media (min-width: 880px){
