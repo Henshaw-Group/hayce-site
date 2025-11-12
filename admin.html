@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en-CA" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Admin — Waitlist Lookup | Hayce</title>
+  <meta name="description" content="Hash an email to find the deterministic waitlist document ID and open it in the console.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    /* small extras so the admin panel feels at home */
+    .admin-card { max-width: 760px; margin: 0 auto; }
+    .out { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; word-break: break-all; }
+    .row { display: grid; grid-template-columns: 140px 1fr auto; gap: 10px; align-items: center; }
+    .row .btn { white-space: nowrap; }
+    .out-label { color: var(--muted); font-size: .9rem; margin: 12px 0 4px; }
+    .cta { display: flex; gap: 8px; flex-wrap: wrap; }
+    .hint-sm { font-size: .85rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" aria-label="Site header">
+    <div class="container">
+      <a class="brand" href="/" aria-label="Hayce home">
+        <img src="/assets/logo-h.svg" alt="" width="28" height="28" />
+        <span class="brand__name">Hayce</span>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="/" class="nav-link">Site</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="section section--narrow">
+    <div class="container">
+      <h1>Admin · Waitlist lookup</h1>
+      <p class="micro">Hash an email to get its deterministic document ID (create-only scheme) and deep-link to it.</p>
+
+      <div class="card admin-card">
+        <form id="lookup-form" class="grid" novalidate>
+          <div class="field" style="grid-column: 1 / -1">
+            <label for="email">Email to look up<span aria-hidden="true" class="req">*</span></label>
+            <input id="email" name="email" type="email" required placeholder="name@example.com" autocomplete="off" />
+            <p class="error" id="error-email" role="alert" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <label for="projectId">Firebase project ID</label>
+            <input id="projectId" name="projectId" type="text" placeholder="auto from config.js" />
+            <p class="hint-sm">e.g. <code>hayce-prod</code></p>
+          </div>
+
+          <div class="field">
+            <label for="collection">Collection</label>
+            <input id="collection" name="collection" type="text" value="waitlist" />
+            <p class="hint-sm">Defaults to <code>waitlist</code> (respects <code>CONFIG.firebase.collection</code> if set).</p>
+          </div>
+
+          <div class="actions" style="align-items:flex-end;">
+            <button class="btn" id="do-hash" type="submit">Compute</button>
+            <button class="btn btn--ghost" id="clear" type="button">Clear</button>
+            <div id="status" class="status" role="status" aria-live="polite"></div>
+          </div>
+        </form>
+      </div>
+
+      <div class="card admin-card mt" id="results" hidden>
+        <div>
+          <div class="out-label">Normalized email</div>
+          <div class="out" id="norm"></div>
+        </div>
+
+        <div class="mt">
+          <div class="out-label">Deterministic doc ID</div>
+          <div class="row">
+            <div class="out" id="docId" style="grid-column: 1 / 3">—</div>
+            <button class="btn btn--ghost" data-copy="#docId" type="button" aria-label="Copy doc ID">Copy</button>
+          </div>
+        </div>
+
+        <div class="mt">
+          <div class="out-label">Firestore path</div>
+          <div class="row">
+            <div class="out" id="path" style="grid-column: 1 / 3">—</div>
+            <button class="btn btn--ghost" data-copy="#path" type="button" aria-label="Copy path">Copy</button>
+          </div>
+        </div>
+
+        <div class="mt">
+          <div class="out-label">Open in console</div>
+          <div class="cta">
+            <a id="link-firebase" class="btn" target="_blank" rel="noopener">Open in Firebase Console</a>
+            <a id="link-cloud" class="btn btn--alt" target="_blank" rel="noopener">Open in Google Cloud Console</a>
+          </div>
+          <p class="hint-sm mt">Note: If the document doesn’t exist (user never submitted or different email casing), the console will show “not found”.</p>
+        </div>
+      </div>
+
+      <p class="micro mt">Security: This page runs entirely client-side; emails are hashed locally with SHA-256. No network calls are made.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container foot-grid">
+      <p class="micro">© <span id="year"></span> Hayce. Admin utility.</p>
+      <nav class="foot-nav">
+        <a href="/">Home</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Config first (ESM), then admin logic -->
+  <script type="module" src="/admin.js?v=1"></script>
+</body>
+</html>

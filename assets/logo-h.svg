@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="Hayce logo">
+  <rect width="256" height="256" rx="40" fill="#0B0F15"></rect>
+  <path d="M72 52h32v64h48V52h32v152h-32v-64h-48v64H72z" fill="#EAB308"></path>
+</svg>

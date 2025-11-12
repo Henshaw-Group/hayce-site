@@ -1,0 +1,11 @@
+{
+  "name": "Hayce",
+  "short_name": "Hayce",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0F15",
+  "theme_color": "#22C55E",
+  "icons": [
+    { "src": "/assets/favicon.svg", "sizes": "64x64 128x128 256x256", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

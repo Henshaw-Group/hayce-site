@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>You're on the list — Hayce</title>
+  <meta name="description" content="Thanks for joining the Hayce waitlist.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <main id="main" class="section section--narrow">
+    <div class="container center">
+      <img src="/assets/logo-h.svg" width="56" height="56" alt="Hayce">
+      <h1>Thanks — you’re on the list!</h1>
+      <p id="thanks-line">We’ll be in touch shortly.</p>
+      <p class="micro">Changed your mind? <a href="/">Go back</a>.</p>
+    </div>
+  </main>
+  <script>
+    const p = new URLSearchParams(location.search);
+    const role = p.get('role');
+    if (role) {
+      const map = { Poster: 'Hayce Hub (Poster)', Provider: 'Haycer (Provider)', Both: 'Both' };
+      document.getElementById('thanks-line').textContent = `You’re queued for ${map[role] || 'Hayce'}.`;
+    }
+  </script>
+</body>
+</html>
