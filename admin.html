@@ -5,12 +5,11 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Admin — Waitlist Lookup | Hayce</title>
-  <meta name="description" content="Hash an email to find the deterministic waitlist document ID and open it in the console.">
+  <meta name="description" content="Anon sign-in + local passcode check to register this browser as admin, then check if a waitlist doc exists.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* small extras so the admin panel feels at home */
     .admin-card { max-width: 760px; margin: 0 auto; }
     .out { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; word-break: break-all; }
     .row { display: grid; grid-template-columns: 140px 1fr auto; gap: 10px; align-items: center; }
@@ -18,6 +17,12 @@
     .out-label { color: var(--muted); font-size: .9rem; margin: 12px 0 4px; }
     .cta { display: flex; gap: 8px; flex-wrap: wrap; }
     .hint-sm { font-size: .85rem; color: var(--muted); }
+    .badge { display:inline-block; padding: 2px 8px; border-radius: 999px; font-size: .8rem; border: 1px solid var(--muted-2); }
+    .ok { color: #166534; border-color:#166534; }
+    .err { color: #991b1b; border-color:#991b1b; }
+    .warn { color:#92400e; border-color:#92400e; }
+    .mt-sm{ margin-top: .5rem; }
+    .grid-auth { display:grid; grid-template-columns: 1fr auto; gap:12px; align-items:center; }
   </style>
 </head>
 <body>
@@ -38,9 +43,58 @@
   <main id="main" class="section section--narrow">
     <div class="container">
       <h1>Admin · Waitlist lookup</h1>
-      <p class="micro">Hash an email to get its deterministic document ID (create-only scheme) and deep-link to it.</p>
+      <p class="micro">This page signs in anonymously. Verify your email + passcode (stored in <code>admins_registry</code>) to register this browser as admin, then you can check if a waitlist entry exists.</p>
 
+      <!-- Auth / App Check / Admin status -->
       <div class="card admin-card">
+        <div class="grid-auth">
+          <div>
+            <div class="out-label">Auth</div>
+            <div id="auth-status" class="hint-sm">Booting…</div>
+            <div id="admin-status" class="hint-sm mt-sm">Admin: <span class="badge warn">not registered</span></div>
+            <div id="appcheck-status" class="hint-sm mt-sm">App Check: <span id="appcheck-ind">not initialized</span></div>
+          </div>
+          <div class="cta" style="justify-content:flex-end">
+            <button id="unregister" class="btn btn--ghost" type="button" disabled>Unregister this browser</button>
+            <button id="rotate-id" class="btn btn--ghost" type="button" disabled>New anon ID</button>
+          </div>
+        </div>
+        <p class="hint-sm mt">No Google sign-in needed. This uses Firebase Anonymous Auth + a passcode you control.</p>
+		
+		<p id="auth-error-tip" class="hint-sm mt warn" hidden>
+		  Anonymous sign-in is disabled for this project.
+		  In Firebase Console → <b>Authentication</b> → <b>Sign-in method</b>, enable <b>Anonymous</b>.
+		  Also verify your site is listed in <b>Authorized domains</b>.
+		</p>
+
+	  
+	  </div>
+
+      <!-- Admin login (verify + register) -->
+      <div class="card admin-card mt">
+        <form id="admin-login-form" class="grid" novalidate>
+          <div class="field" style="grid-column: 1 / -1">
+            <label for="adminEmail">Admin email<span aria-hidden="true" class="req">*</span></label>
+            <input id="adminEmail" name="adminEmail" type="email" required placeholder="admin@example.com" autocomplete="off" />
+            <p class="error" id="error-adminEmail" role="alert" aria-live="polite"></p>
+          </div>
+          <div class="field" style="grid-column: 1 / -1">
+            <label for="adminPass">Passcode<span aria-hidden="true" class="req">*</span></label>
+            <input id="adminPass" name="adminPass" type="password" required placeholder="••••••••" autocomplete="current-password" />
+            <p class="error" id="error-adminPass" role="alert" aria-live="polite"></p>
+          </div>
+          <div class="actions" style="align-items:flex-end;">
+            <button class="btn" id="btn-verify-register" type="submit">Verify &amp; Register this browser</button>
+            <!-- NEW: self-serve signup to create admins_registry -->
+            <button class="btn btn--alt" id="btn-signup" type="button">Sign up (create registry)</button>
+            <div id="login-status" class="status" role="status" aria-live="polite"></div>
+          </div>
+        </form>
+        <p class="hint-sm mt">This checks <code>admins_registry/{emailHash}</code>, compares a salted hash of your passcode, and writes <code>admins/{authUid}</code> (active admin). Use “Sign up” once to create your registry entry; then “Verify &amp; Register”.</p>
+      </div>
+
+      <!-- Compute / Lookup -->
+      <div class="card admin-card mt">
         <form id="lookup-form" class="grid" novalidate>
           <div class="field" style="grid-column: 1 / -1">
             <label for="email">Email to look up<span aria-hidden="true" class="req">*</span></label>
@@ -51,7 +105,7 @@
           <div class="field">
             <label for="projectId">Firebase project ID</label>
             <input id="projectId" name="projectId" type="text" placeholder="auto from config.js" />
-            <p class="hint-sm">e.g. <code>hayce-prod</code></p>
+            <p class="hint-sm">e.g. <code>hg-1-2b031</code></p>
           </div>
 
           <div class="field">
@@ -80,6 +134,7 @@
             <div class="out" id="docId" style="grid-column: 1 / 3">—</div>
             <button class="btn btn--ghost" data-copy="#docId" type="button" aria-label="Copy doc ID">Copy</button>
           </div>
+          <p class="hint-sm">Doc ID is the 64-char lowercase hex SHA-256 of the normalized email (no prefix).</p>
         </div>
 
         <div class="mt">
@@ -96,11 +151,36 @@
             <a id="link-firebase" class="btn" target="_blank" rel="noopener">Open in Firebase Console</a>
             <a id="link-cloud" class="btn btn--alt" target="_blank" rel="noopener">Open in Google Cloud Console</a>
           </div>
-          <p class="hint-sm mt">Note: If the document doesn’t exist (user never submitted or different email casing), the console will show “not found”.</p>
+          <p class="hint-sm mt">If the document doesn’t exist, the console will show “not found”.</p>
+        </div>
+
+        <div class="mt">
+          <div class="out-label">Existence</div>
+          <div id="existence" class="hint-sm">Register as admin to check existence.</div>
         </div>
       </div>
 
-      <p class="micro mt">Security: This page runs entirely client-side; emails are hashed locally with SHA-256. No network calls are made.</p>
+      <!-- Dev helper (local only) -->
+      <div class="card admin-card mt" id="dev-gen" hidden>
+        <h3 class="h4">Dev: create <code>admins_registry</code> entry (local only)</h3>
+        <p class="hint-sm">Generate fields to paste into Firestore Console.</p>
+        <form id="dev-form" class="grid" novalidate>
+          <div class="field" style="grid-column: 1 / -1">
+            <label for="devEmail">Admin email (normalized)</label>
+            <input id="devEmail" type="email" placeholder="admin@example.com" />
+          </div>
+          <div class="field" style="grid-column: 1 / -1">
+            <label for="devPass">Passcode</label>
+            <input id="devPass" type="text" placeholder="Strong passphrase" />
+          </div>
+          <div class="actions" style="align-items:flex-end;">
+            <button class="btn" id="devMake" type="button">Generate JSON</button>
+            <div id="devOut" class="out" style="margin-left:12px;"></div>
+          </div>
+        </form>
+        <p class="hint-sm mt">Doc ID for <code>admins_registry</code> is <code>emailHash = sha256(lowercase(email))</code>.</p>
+      </div>
+
     </div>
   </main>
 
@@ -113,7 +193,7 @@
     </div>
   </footer>
 
-  <!-- Config first (ESM), then admin logic -->
-  <script type="module" src="admin.js?v=1"></script>
+  <!-- bump v=4 so browsers pick up the JS change -->
+  <script type="module" src="admin.js?v=4"></script>
 </body>
 </html>

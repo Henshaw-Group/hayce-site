@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Hayce — Get things done nearby | Posters & Providers Waitlist</title>
   <meta name="description" content="Hayce connects Posters who need errands done with Providers already nearby. Join the waitlist for Hayce Hub (Poster) or Haycer (Provider). Fast, fair, local.">
-  <link rel="canonical" href="https://hayce.com/" />
+  <link rel="canonical" href="https://hayce-apps.com/" />
 
   <!-- Theme color -->
   <meta name="theme-color" content="#22C55E" media="(prefers-color-scheme: light)">
@@ -16,20 +16,20 @@
   <meta name="format-detection" content="telephone=no" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Hayce — Get things done nearby" />
-  <meta property="og:description" content="Join the Hayce pre-launch waitlist: Posters (Hayce Hub) & Providers (Haycer)." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://hayce.com/" />
-  <meta property="og:site_name" content="Hayce" />
-  <meta property="og:locale" content="en_CA" />
-  <meta property="og:image" content="https://hayce.com/assets/og-image.svg" />
-  <meta property="og:image:alt" content="Hayce — H monogram with tagline: Post clearly. Get it done quickly." />
+  <meta property="og:title" content="Hayce — Get things done nearby">
+  <meta property="og:description" content="Join the Hayce pre-launch waitlist: Posters (Hayce Hub) & Providers (Haycer).">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hayce-apps.com/">
+  <meta property="og:site_name" content="Hayce">
+  <meta property="og:locale" content="en_CA">
+  <meta property="og:image" content="https://hayce-apps.com/assets/og-image.svg">
+  <meta property="og:image:alt" content="Hayce — H monogram with tagline: Post clearly. Get it done quickly.">
 
   <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Hayce — Get things done nearby" />
-  <meta name="twitter:description" content="Join the pre-launch waitlist: Posters (Hayce Hub) & Providers (Haycer)." />
-  <meta name="twitter:image" content="https://hayce.com/assets/og-image.svg" />
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hayce — Get things done nearby">
+  <meta name="twitter:description" content="Join the pre-launch waitlist: Posters (Hayce Hub) & Providers (Haycer).">
+  <meta name="twitter:image" content="https://hayce-apps.com/assets/og-image.svg">
 
   <!-- Favicons / Manifest -->
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
@@ -48,8 +48,8 @@
       {
         "@type": "Organization",
         "name": "Hayce",
-        "url": "https://hayce.com/",
-        "logo": "https://hayce.com/assets/logo-h.svg",
+        "url": "https://hayce-apps.com/",
+        "logo": "https://hayce-apps.com/assets/logo-h.svg",
         "sameAs": []
       },
       {
@@ -59,7 +59,7 @@
         "operatingSystem": "iOS, Android",
         "offers": { "@type": "Offer", "price": "0" },
         "publisher": { "@type": "Organization", "name": "Hayce" },
-        "url": "https://hayce.com/"
+        "url": "https://hayce-apps.com/"
       },
       {
         "@type": "SoftwareApplication",
@@ -68,7 +68,7 @@
         "operatingSystem": "iOS, Android",
         "offers": { "@type": "Offer", "price": "0" },
         "publisher": { "@type": "Organization", "name": "Hayce" },
-        "url": "https://hayce.com/"
+        "url": "https://hayce-apps.com/"
       }
     ]
   }
@@ -85,20 +85,29 @@
   </div>
 
   <header class="site-header" aria-label="Site header">
-    <div class="container">
-      <a class="brand" href="./" aria-label="Hayce home">
-        <img src="assets/logo-h.svg" alt="" width="36" height="36" />
-        <span class="brand__name">Hayce</span>
-      </a>
-      <nav class="site-nav" aria-label="Main">
-        <a href="#how" class="nav-link">How it works</a>
-        <a href="#benefits" class="nav-link">Benefits</a>
-        <a href="#categories" class="nav-link">Categories</a>
-        <a href="#faq" class="nav-link">FAQ</a>
-        <a href="#waitlist" class="btn btn--ghost">Join waitlist</a>
-      </nav>
-    </div>
-  </header>
+  <div class="container">
+    <!-- Brand: logo + name -->
+    <a class="brand" href="./" aria-label="Hayce home">
+      <img src="assets/logo-h.svg" alt="" width="36" height="36" />
+      <span class="brand__name">Hayce</span>
+    </a>
+
+    <!-- Single hamburger (kept OUTSIDE the brand) -->
+    <button type="button" class="menu-toggle" aria-label="Toggle menu" aria-controls="primary-nav" aria-expanded="false">
+      <span class="menu-lines" aria-hidden="true"></span>
+    </button>
+
+    <!-- Primary nav -->
+    <nav class="site-nav" id="primary-nav" aria-label="Main">
+      <a href="#how" class="nav-link">How it works</a>
+      <a href="#benefits" class="nav-link">Benefits</a>
+      <a href="#categories" class="nav-link">Categories</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+      <a href="#waitlist" class="btn btn--ghost">Join waitlist</a>
+    </nav>
+  </div>
+</header>
+
 
   <main id="main">
     <!-- HERO -->
@@ -369,7 +378,6 @@
           <fieldset class="field">
             <legend class="legend-spaced">Skills you could offer <span class="micro">(optional)</span></legend>
             <div class="chipset">
-              <!-- (same list you already have) -->
               <label class="chip-check"><input type="checkbox" name="skills" value="Delivery"><svg class="ico" aria-hidden="true"><use href="#ico-delivery"/></svg><span>Delivery</span></label>
               <label class="chip-check"><input type="checkbox" name="skills" value="Cleaning"><svg class="ico" aria-hidden="true"><use href="#ico-cleaning"/></svg><span>Cleaning</span></label>
               <label class="chip-check"><input type="checkbox" name="skills" value="Tailoring"><svg class="ico" aria-hidden="true"><use href="#ico-tailoring"/></svg><span>Tailoring</span></label>
@@ -560,6 +568,37 @@
     </symbol>
   </svg>
 
+  <!-- Small inline script for the mobile menu (kept separate from app.js) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.querySelector('.menu-toggle');
+      const nav = document.getElementById('primary-nav');
+      if (!btn || !nav) return;
+
+      btn.addEventListener('click', () => {
+        const open = nav.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+
+      // Close menu when a nav link is clicked (mobile)
+      nav.addEventListener('click', (e) => {
+        if (e.target.closest('a')) {
+          nav.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Close if you click outside (mobile)
+      document.addEventListener('click', (e) => {
+        if (!nav.classList.contains('is-open')) return;
+        if (e.target.closest('.site-header')) return;
+        nav.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+
+  <!-- App JS -->
   <script type="module" src="app.js?v=4"></script>
 </body>
 </html>

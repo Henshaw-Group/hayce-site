@@ -3,7 +3,7 @@ const IS_LOCAL = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname)
 
 export const CONFIG = {
   siteName: "Hayce",
-  baseUrl: IS_LOCAL ? "http://localhost:5173" : "https://hayce.com",
+  baseUrl: IS_LOCAL ? "http://localhost:5173" : "https://hayce-apps.com",
 
   provider: "firebase",           // 'firebase' | 'form'
   formEndpoint: "",
@@ -37,6 +37,6 @@ export const CONFIG = {
 
   enableAnalytics: false,
   analyticsProvider: "ga4",
-  analyticsDomain: "hayce.com",
+  analyticsDomain: "hayce-apps.com",
   gaMeasurementId: "G-G1B94FBQ23"
 };

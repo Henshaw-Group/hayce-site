@@ -221,7 +221,7 @@ async function submitViaFirebase(payload) {
   console.info("[Firebase] Importing SDKs…");
   const [
     { initializeApp },
-    { initializeAppCheck, ReCaptchaV3Provider, ReCaptchaEnterpriseProvider, getToken },
+    { initializeAppCheck, ReCaptchaV3Provider, getToken },
     { getFirestore, serverTimestamp, doc, setDoc }
   ] = await Promise.all([
     import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"),
@@ -232,28 +232,27 @@ async function submitViaFirebase(payload) {
   const app = initializeApp(firebase);
   console.info("[Firebase] App initialized for project:", firebase.projectId);
 
+  // --- App Check (reCAPTCHA v3) ---
   let appCheckInstance = undefined;
-  if (appCheck?.provider && appCheck?.siteKey) {
+  if (appCheck?.provider === "recaptchaV3" && appCheck?.siteKey) {
     if (appCheck.debug) {
       self.FIREBASE_APPCHECK_DEBUG_TOKEN = appCheck.debug === true ? true : String(appCheck.debug);
-      console.info("[AppCheck] Debug mode ON. A debug token will be printed by Firebase on the first App Check call.");
+      console.info("[AppCheck] Debug mode ON (v3). A debug token will be printed by Firebase.");
     }
 
-    const provider =
-      appCheck.provider === "recaptchaEnterprise"
-        ? new ReCaptchaEnterpriseProvider(appCheck.siteKey)
-        : new ReCaptchaV3Provider(appCheck.siteKey);
-
+    const provider = new ReCaptchaV3Provider(appCheck.siteKey);
     appCheckInstance = initializeAppCheck(app, { provider, isTokenAutoRefreshEnabled: true });
 
     try {
       const tok = await getToken(appCheckInstance, /* forceRefresh */ true);
-      if (tok?.token) console.info(`[AppCheck] token acquired (len=${tok.token.length}).`);
+      if (tok?.token) console.info(`[AppCheck] v3 token acquired (len=${tok.token.length}).`);
+      document.documentElement.setAttribute("data-appcheck", tok?.token ? "ok" : "missing");
     } catch (e) {
-      console.warn("[AppCheck] getToken failed", e);
+      console.warn("[AppCheck] getToken failed (v3)", e);
+      document.documentElement.setAttribute("data-appcheck", "missing");
     }
   } else {
-    console.warn("[AppCheck] Skipped initialization (missing provider or siteKey in config).");
+    console.warn("[AppCheck] Skipped (provider not set to recaptchaV3 or missing siteKey).");
   }
 
   const db = getFirestore(app);
@@ -282,8 +281,11 @@ async function submitViaFirebase(payload) {
   };
 
   try {
+    // Write-first: rules allow create but NOT read/update.
     await setDoc(ref, docData);
+    setStatus("Submitted with App Check token ✔️");
   } catch (e) {
+    // If the doc already exists, rules classify this as an UPDATE (not allowed) -> permission-denied.
     if (String(e?.code) === "permission-denied") {
       const friendly = new Error("Already registered");
       friendly.code = "already-registered";
