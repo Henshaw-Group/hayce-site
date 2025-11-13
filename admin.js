@@ -184,24 +184,34 @@ async function ensureAnonAuth() {
   });
 
     // Start / ensure signed in
-  try {
-    if (!auth.currentUser) await signInAnonymously(auth);
-  } catch (e) {
-    const code = String(e?.code || '');
-    let msg = 'Anonymous sign-in failed';
-    if (code === 'auth/admin-restricted-operation' || code === 'auth/operation-not-allowed') {
-      msg = 'Anonymous sign-in is disabled for this project';
-      const tip = qs('#auth-error-tip');
-      if (tip) {
-        tip.hidden = false;
-        tip.innerHTML = 'Anonymous sign-in is disabled for this project. ' +
-          'Open Firebase Console → <b>Authentication</b> → <b>Sign-in method</b>, enable <b>Anonymous</b>. ' +
-          'Also ensure your domain is in <b>Authorized domains</b>.';
-      }
+try {
+  if (!auth.currentUser) await signInAnonymously(auth);
+} catch (e) {
+  const code = String(e?.code || '');
+  const msgStr = String(e?.message || '');
+  let msg = 'Anonymous sign-in failed';
+
+  if (code === 'auth/admin-restricted-operation' || code === 'auth/operation-not-allowed') {
+    msg = 'Anonymous sign-in is disabled for this project';
+  } else if (msgStr.includes('requests-from-referer')) {
+    // Example: auth/requests-from-referer-https://henshaw-group.github.io-are-blocked
+    msg = 'Requests from this site are blocked by your Web API key referrer restrictions';
+    const tip = qs('#auth-error-tip');
+    if (tip) {
+      tip.hidden = false;
+      tip.innerHTML = `
+        Requests from this site are blocked by your Web API key <b>HTTP referrer restrictions</b>.<br/>
+        Fix: Google Cloud Console → <b>APIs & Services → Credentials</b> → your Web API key → set to
+        <b>HTTP referrers</b> and add <code>https://henshaw-group.github.io/*</code> (and your domain).<br/>
+        Also ensure your reCAPTCHA Enterprise site key allows this domain.
+      `;
     }
-    qs('#auth-status').textContent = `${msg} (${code})`;
-    console.warn('[Admin] Anonymous sign-in error:', e);
   }
+
+  qs('#auth-status').textContent = `${msg} (${code || 'see console'})`;
+  console.warn('[Admin] Anonymous sign-in error:', e);
+}
+
 
 }
 
